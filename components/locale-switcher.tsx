@@ -27,10 +27,10 @@ export default function LocaleSwitcher() {
                <Languages className="h-5 w-5" />
             </Button>
          </DropdownMenuTrigger>
-         <DropdownMenuContent align="end" className="bg-black">
+         <DropdownMenuContent align="end" className="bg-background">
             {locales.map((loc) => (
                <DropdownMenuItem
-                  className={cn("cursor-pointer hover:bg-white/30", locale === loc && "bg-white/30")}
+                  className={cn("cursor-pointer hover:bg-foreground hover:text-background transition-all duration-300")}
                   key={loc}
                   onSelect={() => onSelectLocale(loc)}
                   disabled={locale === loc || isPending}
