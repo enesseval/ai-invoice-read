@@ -1,5 +1,13 @@
 {
    "HomePage": {
       "title": "Merhaba dünya!"
+   },
+   "schemas": {
+      "name-is-required": "İsim gerekli",
+      "surname-is-required": "Soyisim gerekli",
+      "email-is-invalid": "Geçersiz e-posta adresi",
+      "password-min-8": "Şifre en az 8 karakter olmalıdır",
+      "password-max-32": "Şifre en fazla 32 karakter olabilir",
+      "password-regex": "Şifre en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter içermelidir"
    }
 }

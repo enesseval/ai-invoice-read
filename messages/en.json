@@ -1,5 +1,13 @@
 {
    "HomePage": {
       "title": "Hello world!"
+   },
+   "schemas": {
+      "name-is-required": "Name is required",
+      "surname-is-required": "Surname is required",
+      "email-is-invalid": "Email is invalid",
+      "password-min-8": "The password must be at least 8 characters long",
+      "password-max-32": "The password must be a maximum of 32 characters",
+      "password-regex": "The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
    }
 }
