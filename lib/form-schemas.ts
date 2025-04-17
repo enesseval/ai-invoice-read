@@ -9,5 +9,11 @@ export const signUpFormSchema = (t: (arg: string) => string) =>
          .string()
          .min(8, t("password-min-8"))
          .max(32, t("password-max-32"))
-         .regex(/^(?=.*[A-Z]).{8,}$/, t("password-regex")),
+         .regex(/^(?=.*[A-Z]).{8,}$/, t("password-regex")), // Keep regex for consistency, adjust if needed
+   });
+
+export const signInFormSchema = (t: (arg: string) => string) =>
+   z.object({
+      email: z.string().email({ message: t("email-is-invalid") }),
+      password: z.string().min(1, { message: t("password-min-8") }), // Min 1 for sign-in, adjust if needed
    });

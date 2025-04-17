@@ -4,6 +4,7 @@ import "./globals.css";
 import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
    variable: "--font-geist-sans",
@@ -31,7 +32,11 @@ export default async function RootLayout({
       <html lang={locale} suppressHydrationWarning>
          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-               <NextIntlClientProvider>{children}</NextIntlClientProvider>
+               <NextIntlClientProvider>
+                  {children}
+
+                  <Toaster />
+               </NextIntlClientProvider>
             </ThemeProvider>
          </body>
       </html>
