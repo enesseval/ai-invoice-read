@@ -39,36 +39,19 @@ export async function signUp(values: any): Promise<{ success: boolean; messageKe
    }
 
    // Auth kullanıcısı başarıyla oluşturulduysa devam et
+   // Profil oluşturma işlemi artık Supabase Trigger (handle_new_user) tarafından yapılıyor.
    if (authData.user) {
       const user = authData.user;
-      const username = generateUsername(values.name, values.surname);
+      // Kullanıcı adı trigger tarafından oluşturulduğu için burada üretmeye gerek yok,
+      // ancak istemciye geri bildirmek için meta veriden alabiliriz veya trigger'ın ürettiğini varsayabiliriz.
+      // Şimdilik sadece başarı mesajı döndürelim. Gerekirse trigger'dan dönen username alınabilir.
+      // const username = generateUsername(values.name, values.surname); // Bu satır kaldırıldı
 
-      // 2. Profiles Tablosuna Kayıt Ekle
-      // ÖNEMLİ: Bu işlem auth.signUp ile atomik değil.
-      // İdeal olarak Supabase Trigger veya Edge Function ile yapılmalı.
-      // Şimdilik action içinde yapıyoruz.
-      const { error: profileError } = await supabase
-         .from("profiles") // 'profiles' tablo adını kullan
-         .insert({
-            id: user.id, // Auth kullanıcısının ID'si
-            username: username,
-            name: values.name,
-            surname: values.surname,
-            // created_at ve updated_at varsayılan değerlerini kullanır
-         });
-
-      if (profileError) {
-         console.error("Sign up error (profile creation):", profileError.message);
-         // Profil oluşturma hatası durumunda ne yapmalı?
-         // Belki auth kullanıcısını silmek gerekebilir (rollback mantığı)
-         // Şimdilik sadece hata döndürelim. Kullanıcı auth'ta var ama profili yok durumu oluşabilir.
-         // TODO: Daha sağlam hata yönetimi ekle (örn: auth kullanıcısını sil)
-         return { success: false, messageKey: "signUp.error.profile", errorCode: profileError.code, errorMessage: profileError.message };
-      }
-
-      // Hem auth hem profil başarılı
-      console.log("Sign up successful, user and profile created:", user.id, username);
-      return { success: true, messageKey: "signUp.success", username: username }; // userId yerine username döndür
+      console.log("Sign up successful (auth), profile creation handled by trigger:", user.id);
+      // Başarı durumunda username döndürmek yerine sadece başarı mesajı döndürebiliriz,
+      // çünkü username trigger'da oluşturuluyor ve buraya doğrudan gelmiyor.
+      // İstemci tarafı gerekirse giriş sonrası profilden alabilir.
+      return { success: true, messageKey: "signUp.success" }; // username kaldırıldı
    } else if (!signUpError && !authData.user) {
       // Auth başarılı ama user objesi null (beklenmedik durum)
       console.warn("Sign up successful (auth) but user object is null.");

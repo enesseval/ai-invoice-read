@@ -68,7 +68,7 @@ export async function middleware(request: NextRequest) {
    // 1. If user is logged in and tries to access sign-in or sign-up, redirect to their page
    if (user && isPublicAuthPath) {
       console.log(`Redirecting logged-in user from ${pathname} to /${user.id}`);
-      return NextResponse.redirect(new URL(`/${user.id}`, request.url));
+      return NextResponse.redirect(new URL(`/profile`, request.url));
    }
 
    // 2. If user is NOT logged in and tries to access a protected path, rewrite to unauthorized

@@ -5,6 +5,7 @@ import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+import { Sidebar } from "@/components/sidebar"; // Sidebar'ı import et
 
 const geistSans = Geist({
    variable: "--font-geist-sans",
@@ -33,8 +34,16 @@ export default async function RootLayout({
          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                <NextIntlClientProvider>
-                  {children}
-
+                  <div className="flex min-h-screen w-full">
+                     {" "}
+                     {/* Flex container */}
+                     <Sidebar /> {/* Sidebar'ı ekle */}
+                     <main className="flex-1 flex flex-col">
+                        {" "}
+                        {/* Ana içerik alanı */}
+                        {children}
+                     </main>
+                  </div>
                   <Toaster />
                </NextIntlClientProvider>
             </ThemeProvider>

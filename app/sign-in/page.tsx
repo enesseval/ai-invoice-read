@@ -16,7 +16,6 @@ import { useRouter, useSearchParams } from "next/navigation"; // useRouter ve us
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FcGoogle } from "react-icons/fc"; // Google ikonu import edildi
-import { IoLogoApple } from "react-icons/io5"; // Apple ikonu import edildi
 
 function SignIn() {
    const t = useTranslations("schemas"); // Genel şema çevirileri
@@ -58,9 +57,9 @@ function SignIn() {
             // Check for username instead of userId
             toast.success(tSignIn("toastSuccess"));
             form.reset();
-            // Başarılı giriş sonrası username ile yönlendirme (direkt /username)
+
             setTimeout(() => {
-               router.push(`/${result.username}`); // Yönlendirme: /[username]
+               router.push(`/profile`);
             }, 1500); // Kısa bir gecikme
          } else if (result.success && !result.username) {
             // Başarılı ama username yoksa (beklenmedik durum, örn. profil bulunamadı), genel hata göster
@@ -75,7 +74,7 @@ function SignIn() {
                // Diğer genel hatalar için authErrors kullanabiliriz veya signInPage'e ekleyebiliriz
                // Şimdilik genel bir hata mesajı gösterelim
                toast.error(tSignIn("toastErrorUnexpected", { error: result.errorCode || "Bilinmeyen Hata" }));
-               console.error("Sign in error:", result.errorCode);
+               console.error("Sign in error:", result);
             }
          }
       } catch (error) {
